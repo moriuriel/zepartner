@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  database:
+    image: mongo
+    container_name: zepartner_database
+    restart: always
+    ports:
+      - 2017:2017
+    volumes:
+      - ./.docker/db/mongodb:/data/db
+      - ./.docker/db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=zepartner
+      - MONGO_INITDB_ROOT_PASSWORD=zepartner
+  app:
+    build: .
+    container_name: zepartner
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/usr/app
+    links:
+      - database
+    depends_on:
+      - database
+    
