@@ -6,13 +6,14 @@ services:
     container_name: zepartner_database
     restart: always
     ports:
-      - 2017:2017
+      - 27017:27017
     volumes:
       - ./.docker/db/mongodb:/data/db
       - ./.docker/db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js'
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=zepartner
-      - MONGO_INITDB_ROOT_PASSWORD=zepartner
+      MONGO_INITDB_ROOT_USERNAME: 'zepartner'
+      MONGO_INITDB_ROOT_PASSWORD: 'zepartner'
+      MONGO_INITDB_DATABASE: 'partners'
   app:
     build: .
     container_name: zepartner
