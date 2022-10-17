@@ -15,10 +15,16 @@ export interface AddressPartner {
   coordinates: Postion[];
 }
 
+export interface CoverageAreaPartner {
+  type: string;
+  coordinates: Postion[][][];
+}
+
 export interface ICreatePartnerInput {
   tradingName: string;
   ownerName: string;
   document: string;
+  coverageArea: CoverageAreaPartner;
   address: AddressPartner;
 }
 

@@ -17,6 +17,7 @@ export class CreatePartnerUseCase implements ICreatePartnerUsecase {
 
   async execute(input: ICreatePartnerInput): Promise<ICreatePartnerOutput> {
     const addressType = AreaTypeEnum[input.address.type];
+    const coverageAreaType = AreaTypeEnum[input.coverageArea.type];
 
     const partner = await this.repo.create({
       document: input.document,
@@ -25,6 +26,10 @@ export class CreatePartnerUseCase implements ICreatePartnerUsecase {
       address: {
         coordinates: input.address.coordinates,
         type: String(addressType),
+      },
+      coverageArea: {
+        coordinates: input.coverageArea.coordinates,
+        type: coverageAreaType,
       },
     });
 

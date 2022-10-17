@@ -31,6 +31,16 @@ export class Partner {
     type: string;
     coordinates: Postion[];
   };
+  @Prop(
+    raw({
+      type: { type: String, enum: AreaTypeEnum },
+      coordinates: { type: Array },
+    }),
+  )
+  coverageArea: {
+    type: string;
+    coordinates: Postion[][][];
+  };
 }
 
 export type PartnerDocument = Partner & Document;

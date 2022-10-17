@@ -8,7 +8,10 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-type Postion = [lat: number, lng: number];
+class Postion {
+  lat: number;
+  lng: number;
+}
 
 export enum AreaTypeEnum {
   MultiPolygon = 'MultiPolygon',
@@ -21,7 +24,16 @@ export class AddressPartnerDto {
   type: AreaTypeEnum;
   @IsArray()
   @ArrayNotEmpty()
-  coordinates: Postion;
+  coordinates: Postion[];
+}
+
+export class CoverageAreaPartnerDto {
+  @IsNotEmpty()
+  @IsEnum(AreaTypeEnum)
+  type: AreaTypeEnum;
+  @IsArray()
+  @ArrayNotEmpty()
+  coordinates: Postion[][][];
 }
 
 export class CreatePartnerDto {
@@ -37,4 +49,7 @@ export class CreatePartnerDto {
   @ValidateNested()
   @Type(() => AddressPartnerDto)
   address: AddressPartnerDto;
+  @ValidateNested()
+  @Type(() => CoverageAreaPartnerDto)
+  coverageArea: CoverageAreaPartnerDto;
 }
