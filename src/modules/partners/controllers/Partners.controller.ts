@@ -35,6 +35,6 @@ export class PartnersController {
   ) {
     const partner = await this.findByIDUseCase.execute(partnerId);
 
-    return response.status(HttpStatus.CREATED).json(partner);
+    return response.status(HttpStatus.OK).json(partner);
   }
 }
