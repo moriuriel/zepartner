@@ -6,13 +6,17 @@ import {
   Partner,
   PartnerSchema,
 } from './infrastructure/schemas/Partner.schema';
-import { CreatePartnerUseCase } from './usecases';
+import { CreatePartnerUseCase, FindPartnerByIDUsecase } from './usecases';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Partner.name, schema: PartnerSchema }]),
   ],
   controllers: [PartnersController],
-  providers: [PartnerMongodbRepository, CreatePartnerUseCase],
+  providers: [
+    PartnerMongodbRepository,
+    CreatePartnerUseCase,
+    FindPartnerByIDUsecase,
+  ],
 })
 export class PartnersModule {}

@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Location } from '../domain/entity/Location';
+import { Partner } from '../domain/entity/Partner';
 import { IPartnerRepository } from '../domain/repository/Partner.repository';
 import {
-  AreaTypeEnum,
   ICreatePartnerInput,
   ICreatePartnerOutput,
   ICreatePartnerUsecase,
@@ -16,21 +17,24 @@ export class CreatePartnerUseCase implements ICreatePartnerUsecase {
   ) {}
 
   async execute(input: ICreatePartnerInput): Promise<ICreatePartnerOutput> {
-    const addressType = AreaTypeEnum[input.address.type];
-    const coverageAreaType = AreaTypeEnum[input.coverageArea.type];
+    const newPartner = new Partner(
+      input.document,
+      input.ownerName,
+      input.tradingName,
+    );
+
+    const address = new Location(input.address.type, input.address.coordinates);
+    const coverageArea = new Location(
+      input.coverageArea.type,
+      input.coverageArea.coordinates,
+    );
 
     const partner = await this.repo.create({
-      document: input.document,
-      ownerName: input.ownerName,
-      tradingName: input.tradingName,
+      ...newPartner,
       address: {
-        coordinates: input.address.coordinates,
-        type: String(addressType),
+        ...address,
       },
-      coverageArea: {
-        coordinates: input.coverageArea.coordinates,
-        type: coverageAreaType,
-      },
+      coverageArea: { ...coverageArea },
     });
 
     return partner;
