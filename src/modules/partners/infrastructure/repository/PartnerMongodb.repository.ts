@@ -16,4 +16,8 @@ export class PartnerMongodbRepository implements IPartnerRepository {
   async findById(id: string): Promise<Partner> {
     return this.repository.findById(id);
   }
+
+  async findByDocument(document: string): Promise<Partner> {
+    return this.repository.findOne({ document });
+  }
 }

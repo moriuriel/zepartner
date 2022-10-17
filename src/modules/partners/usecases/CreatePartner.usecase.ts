@@ -1,4 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { Location } from '../domain/entity/Location';
 import { Partner } from '../domain/entity/Partner';
 import { IPartnerRepository } from '../domain/repository/Partner.repository';
@@ -22,6 +26,12 @@ export class CreatePartnerUseCase implements ICreatePartnerUsecase {
       input.ownerName,
       input.tradingName,
     );
+
+    const isDocumentInUse = await this.repo.findByDocument(newPartner.document);
+
+    if (isDocumentInUse) {
+      throw new UnprocessableEntityException('Document in use');
+    }
 
     const address = new Location(input.address.type, input.address.coordinates);
     const coverageArea = new Location(
