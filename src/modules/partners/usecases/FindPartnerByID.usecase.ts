@@ -1,4 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { IPartnerRepository } from '../domain/repository/Partner.repository';
 import { IFindPartnerByIDUsecase, IPartnerOutput } from '../domain/usecases';
 import { PartnerMongodbRepository } from '../infrastructure/repository';
@@ -12,6 +16,10 @@ export class FindPartnerByIDUsecase implements IFindPartnerByIDUsecase {
 
   async execute(id: string): Promise<IPartnerOutput> {
     const partner = await this.repo.findById(id);
+
+    if (!partner) {
+      throw new UnprocessableEntityException('Partner not found');
+    }
 
     return partner;
   }

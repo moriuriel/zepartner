@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { LoggerProxy } from 'src/infrastrucutre/logger/Logger.proxy';
 import { PartnersController } from './controllers';
 import { PartnerMongodbRepository } from './infrastructure/repository';
 import {
@@ -14,6 +15,12 @@ import { CreatePartnerUseCase, FindPartnerByIDUsecase } from './usecases';
   ],
   controllers: [PartnersController],
   providers: [
+    {
+      provide: 'LoggerClient',
+      useFactory: () => {
+        return LoggerProxy.buildLogger('PartnerModule');
+      },
+    },
     PartnerMongodbRepository,
     CreatePartnerUseCase,
     FindPartnerByIDUsecase,
