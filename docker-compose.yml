@@ -2,8 +2,8 @@ version: '3.7'
 
 services:
   database:
-    image: mongo
     container_name: zepartner_database
+    image: mongo
     restart: always
     ports:
       - 27017:27017
@@ -15,12 +15,16 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 'zepartner'
       MONGO_INITDB_DATABASE: 'partners'
   app:
-    build: .
     container_name: zepartner
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 3001:3001
     volumes:
       - .:/usr/app
+    env_file:
+      - .env
     links:
       - database
     depends_on:
