@@ -8,6 +8,12 @@ A lightweight API for managing partners 🤝
 $ npm install # yarn
 ```
 
+## Copy .env.example to .env
+
+```bash
+$ cp .env.example to .env
+```
+
 ## Running the app
 
 ```bash
