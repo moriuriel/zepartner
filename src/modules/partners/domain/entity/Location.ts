@@ -1,4 +1,4 @@
-export type Position = number[]; // [number, number] | [number, number, number];
+export type Position = number[];
 
 export enum AreaTypeEnum {
   MultiPolygon = 'MultiPolygon',
@@ -7,15 +7,6 @@ export enum AreaTypeEnum {
 
 export class Location {
   constructor(public type: string, public readonly coordinates: Position) {
-    this.type = AreaTypeEnum[type];
-  }
-}
-
-export class CoverageArea {
-  constructor(
-    public type: string,
-    public readonly coordinates: Position[][][],
-  ) {
     this.type = AreaTypeEnum[type];
   }
 }

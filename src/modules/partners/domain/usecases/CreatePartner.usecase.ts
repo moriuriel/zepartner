@@ -1,4 +1,4 @@
-import { Position } from '../entity/Location';
+import { Position } from '../entity';
 
 export interface AddressPartner {
   type: string;

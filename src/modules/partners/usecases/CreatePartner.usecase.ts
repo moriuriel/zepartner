@@ -3,8 +3,8 @@ import {
   Injectable,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { CoverageArea, Location } from '../domain/entity/Location';
-import { Partner } from '../domain/entity/Partner';
+import { CoverageArea, Location, Partner } from '../domain/entity';
+
 import { IPartnerRepository } from '../domain/repository/Partner.repository';
 import {
   ICreatePartnerInput,
