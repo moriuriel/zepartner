@@ -8,11 +8,16 @@ import {
   Logger,
   Param,
   Post,
+  Query,
   Response,
 } from '@nestjs/common';
 import { Response as ExpressResponse } from 'express';
-import { CreatePartnerDto } from '../dtos';
-import { CreatePartnerUseCase, FindPartnerByIDUsecase } from '../usecases';
+import { CreatePartnerDto, FindPartnerByCoverageAreaQueryDto } from '../dtos';
+import {
+  CreatePartnerUseCase,
+  FindPartnerByCoverageAreaUsecase,
+  FindPartnerByIDUsecase,
+} from '../usecases';
 
 @Controller('/partners')
 @Injectable()
@@ -22,7 +27,25 @@ export class PartnersController {
     private readonly logger: Logger,
     private readonly createUseCase: CreatePartnerUseCase,
     private readonly findByIDUseCase: FindPartnerByIDUsecase,
+    private readonly findByCoverageAreaUseCase: FindPartnerByCoverageAreaUsecase,
   ) {}
+
+  @Get()
+  async inddex(
+    @Query() query: FindPartnerByCoverageAreaQueryDto,
+    @Response() response: ExpressResponse,
+  ) {
+    const { lat, lng } = query;
+    const logKey = 'find_by_coverage_area_partner';
+
+    const partner = await this.findByCoverageAreaUseCase.execute({ lat, lng });
+
+    this.logger.log(
+      `Key: ${logKey}, StatusCode: ${HttpStatus.OK}, Message: "success to find by lat:${lat} lng:${lng} partner"`,
+    );
+
+    return response.status(HttpStatus.OK).json(partner);
+  }
 
   @Post()
   async create(

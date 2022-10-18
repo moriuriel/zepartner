@@ -1,13 +1,13 @@
-import { CoordinatesType } from '../entity/Location';
+import { Position } from '../entity/Location';
 
 export interface AddressPartner {
   type: string;
-  coordinates: CoordinatesType;
+  coordinates: Position;
 }
 
 export interface CoverageAreaPartner {
   type: string;
-  coordinates: CoordinatesType;
+  coordinates: Position[][][];
 }
 
 export interface ICreatePartnerInput {

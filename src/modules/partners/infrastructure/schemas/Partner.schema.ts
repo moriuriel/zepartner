@@ -1,10 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 
-class Postion {
-  lat: number;
-  lng: number;
-}
+export type Position = number[]; // [number, number] | [number, number, number];
 
 export enum AreaTypeEnum {
   MultiPolygon = 'MultiPolygon',
@@ -29,7 +26,7 @@ export class Partner {
   )
   address: {
     type: string;
-    coordinates: Postion[];
+    coordinates: Position;
   };
   @Prop(
     raw({
@@ -39,7 +36,7 @@ export class Partner {
   )
   coverageArea: {
     type: string;
-    coordinates: Postion[][][];
+    coordinates: Position[][][];
   };
 }
 

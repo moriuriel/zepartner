@@ -7,7 +7,11 @@ import {
   Partner,
   PartnerSchema,
 } from './infrastructure/schemas/Partner.schema';
-import { CreatePartnerUseCase, FindPartnerByIDUsecase } from './usecases';
+import {
+  CreatePartnerUseCase,
+  FindPartnerByCoverageAreaUsecase,
+  FindPartnerByIDUsecase,
+} from './usecases';
 
 @Module({
   imports: [
@@ -24,6 +28,7 @@ import { CreatePartnerUseCase, FindPartnerByIDUsecase } from './usecases';
     PartnerMongodbRepository,
     CreatePartnerUseCase,
     FindPartnerByIDUsecase,
+    FindPartnerByCoverageAreaUsecase,
   ],
 })
 export class PartnersModule {}

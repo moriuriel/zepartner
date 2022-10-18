@@ -20,4 +20,19 @@ export class PartnerMongodbRepository implements IPartnerRepository {
   async findByDocument(document: string): Promise<Partner> {
     return this.repository.findOne({ document });
   }
+
+  async findByLocation(lat: number, lng: number): Promise<Partner[]> {
+    const res = await this.repository.find({
+      coverageArea: {
+        $nearSphere: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [lat, lng],
+          },
+        },
+      },
+    });
+
+    return res;
+  }
 }

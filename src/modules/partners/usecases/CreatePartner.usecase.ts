@@ -3,7 +3,7 @@ import {
   Injectable,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { Location } from '../domain/entity/Location';
+import { CoverageArea, Location } from '../domain/entity/Location';
 import { Partner } from '../domain/entity/Partner';
 import { IPartnerRepository } from '../domain/repository/Partner.repository';
 import {
@@ -34,17 +34,15 @@ export class CreatePartnerUseCase implements ICreatePartnerUsecase {
     }
 
     const address = new Location(input.address.type, input.address.coordinates);
-    const coverageArea = new Location(
+    const coverageArea = new CoverageArea(
       input.coverageArea.type,
       input.coverageArea.coordinates,
     );
 
     const partner = await this.repo.create({
       ...newPartner,
-      address: {
-        ...address,
-      },
-      coverageArea: { ...coverageArea },
+      address,
+      coverageArea,
     });
 
     return partner;
